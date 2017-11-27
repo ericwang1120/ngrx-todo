@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "generate": "gen-ngrx"
   },
   "private": true,
   "dependencies": {
@@ -21,8 +22,18 @@
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
+    "@ngrx/effects": "^4.1.1",
+    "@ngrx/entity": "^4.1.1",
+    "@ngrx/router-store": "^4.1.1",
+    "@ngrx/store": "^4.1.1",
+    "@ngrx/store-devtools": "^4.1.1",
+    "angular-in-memory-web-api": "^0.5.1",
     "core-js": "^2.4.1",
+    "generate-ngrx": "^0.9.9",
+    "jasmine-marbles": "^0.2.0",
+    "ngrx-store-freeze": "^0.2.0",
     "rxjs": "^5.5.2",
+    "todomvc-app-css": "^2.1.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
@@ -45,5 +56,10 @@
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.4.2"
+  },
+  "genNgrx": {
+    "pagesFolder": "./src/app/pages",
+    "baseNgrxPath": "./src/app/core/ngrx",
+    "rootReducerPath": "./src/app/core/ngrx/reducer.ts"
   }
 }
