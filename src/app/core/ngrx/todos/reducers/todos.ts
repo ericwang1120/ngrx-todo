@@ -21,7 +21,9 @@ export function reducer(
     action: todo.Actions
 ): State {
     switch (action.type) {
-        case todo.LOAD: {
+        case todo.LOAD:
+        case todo.ADD_ONE:
+        case todo.REMOVE_ONE: {
             return {
                 ...state,
                 loading: true,
@@ -35,9 +37,31 @@ export function reducer(
             };
         }
 
+        case todo.ADD_ONE_SUCCESS: {
+            return {
+                ...adapter.addOne(action.payload, state),
+                loading: false,
+            };
+        }
+
+        case todo.REMOVE_ONE_SUCCESS: {
+            return {
+                ...adapter.removeOne(action.payload, state),
+                loading: false,
+            };
+        }
+
         case todo.LOAD_FAIL: {
             return {
                 ...adapter.removeAll(state),
+                loading: false,
+            };
+        }
+
+        case todo.ADD_ONE_FAIL:
+        case todo.REMOVE_ONE_FAIL: {
+            return {
+                ...state,
                 loading: false,
             };
         }

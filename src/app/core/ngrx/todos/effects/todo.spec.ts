@@ -49,7 +49,7 @@ describe('TodoEffects', () => {
     describe('load$', () => {
         it('should load successful', () => {
             const todo1 = generateMockTodo();
-            const todo2 = { ...todo1, id: '222' };
+            const todo2 = { ...todo1, id: 222 };
             const todos = [todo2, todo2];
 
             const action = new Load();

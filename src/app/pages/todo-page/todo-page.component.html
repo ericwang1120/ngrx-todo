@@ -1,1 +1,5 @@
-TodoPage is loaded successfully!
+<section class="todoapp">
+    <app-todo-add-bar (addOne)="addOne($event)"></app-todo-add-bar>
+    <app-todo-list [todos]="todos$|async" [loading]="loading$|async" (removeOne)="removeOne($event)"></app-todo-list>
+    <app-todo-footer></app-todo-footer>
+</section>

@@ -17,6 +17,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './core/ngrx/reducer';
 import { CustomRouterStateSerializer } from './core/ngrx/utils';
 
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemTodoService } from './mock-api/mock-todo';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -31,7 +34,8 @@ import { CustomRouterStateSerializer } from './core/ngrx/utils';
     // Note that you must instrument after importing StoreModule
     StoreDevtoolsModule.instrument({
       maxAge: 25 //  Retains last 25 states
-    })
+    }),
+    InMemoryWebApiModule.forRoot(InMemTodoService)
   ],
   providers: [
     { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },

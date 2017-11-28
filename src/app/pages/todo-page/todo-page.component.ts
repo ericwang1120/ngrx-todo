@@ -17,14 +17,24 @@ import { Todo } from '../../core/ngrx/todos/models/todo';
 })
 export class TodoPageComponent implements OnInit {
   public todos$: Observable<Todo[]>;
+  public loading$: Observable<Boolean>;
 
   constructor(
     private store: Store<fromTodos.State>
   ) {
     this.todos$ = store.select(fromTodos.getAllTodos);
+    this.loading$ = store.select(fromTodos.getLoading);
   }
 
   public ngOnInit(): void {
     this.store.dispatch(new todo.Load());
+  }
+
+  public addOne(payLoad: Todo): void {
+    this.store.dispatch(new todo.AddOne(payLoad));
+  }
+
+  public removeOne(payLoad: number): void {
+    this.store.dispatch(new todo.RemoveOne(payLoad));
   }
 }

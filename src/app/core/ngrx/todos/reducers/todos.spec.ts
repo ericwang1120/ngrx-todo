@@ -5,8 +5,8 @@ import { Todo, generateMockTodo } from '../models/todo';
 
 describe('TodosReducer', () => {
     const todo1 = generateMockTodo();
-    const todo2 = { ...todo1, id: '222' };
-    const todo3 = { ...todo1, id: '333' };
+    const todo2 = { ...todo1, id: 222 };
+    const todo3 = { ...todo1, id: 333 };
     const initialState: fromTodos.State = {
         ids: [],
         entities: {},

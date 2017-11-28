@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/debounceTime';
 import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
@@ -29,6 +30,28 @@ export class TodoEffects {
                 .load()
                 .map((result) => new todo.LoadSuccess(result))
                 .catch((err) => of(new todo.LoadFail(err)));
+        });
+
+    @Effect()
+    public addOne$: Observable<Action> = this.actions$
+        .ofType<todo.AddOne>(todo.ADD_ONE)
+        .map((action) => action.payload)
+        .mergeMap((payload) => {
+            return this.todoService
+                .addOne(payload)
+                .map((result) => new todo.AddOneSuccess(result))
+                .catch((err) => of(new todo.AddOneFail(err)));
+        });
+
+    @Effect()
+    public removeOne$: Observable<Action> = this.actions$
+        .ofType<todo.RemoveOne>(todo.REMOVE_ONE)
+        .map((action) => action.payload)
+        .mergeMap((payload) => {
+            return this.todoService
+                .removeOne(payload)
+                .map((result) => new todo.RemoveOneSuccess(result))
+                .catch((err) => of(new todo.RemoveOneFail(err)));
         });
 
     constructor(
