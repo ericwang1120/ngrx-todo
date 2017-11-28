@@ -1,6 +1,6 @@
 import { reducer } from './todos';
 import * as fromTodos from './todos';
-import { Load, LoadFail, LoadSuccess } from '../actions/todo';
+import { Load, LoadFail, LoadSuccess, AddOneSuccess } from '../actions/todo';
 import { Todo, generateMockTodo } from '../models/todo';
 
 describe('TodosReducer', () => {
@@ -11,6 +11,7 @@ describe('TodosReducer', () => {
         ids: [],
         entities: {},
         loading: false,
+        selectedId: 0
     };
 
     describe('undefined action', () => {
@@ -43,7 +44,8 @@ describe('TodosReducer', () => {
                 [todo2.id]: todo2,
                 [todo3.id]: todo3
             },
-            loading: false
+            loading: false,
+            selectedId: 0
         };
 
         it('should load todos', () => {
@@ -59,7 +61,8 @@ describe('TodosReducer', () => {
         const expectedResult = {
             ids: [],
             entities: {},
-            loading: false
+            loading: false,
+            selectedId: 0
         };
 
         it('return empty array of todos when load fail', () => {
@@ -78,6 +81,23 @@ describe('TodosReducer', () => {
             const loading = expectedResult.loading;
 
             expect(fromTodos.getLoading(expectedResult)).toEqual(loading);
+        });
+    });
+
+    describe('ADD_ONE_SUCCESS', () => {
+        const expectedResult = {
+            ids: [222],
+            entities: { [todo2.id]: todo2 },
+            loading: false,
+            selectedId: 0
+        };
+
+        it('should add a todo', () => {
+            const action = new AddOneSuccess(todo2);
+
+            const result = reducer(initialState, action);
+
+            expect(result).toEqual(expectedResult);
         });
     });
 });

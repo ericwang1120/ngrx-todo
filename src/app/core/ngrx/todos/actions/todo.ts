@@ -17,7 +17,6 @@ export const REMOVE_ONE_FAIL = '[Todo] Remove One Fail';
 export const REMOVE_MANY = '[Todo] Remove Many';
 export const REMOVE_MANY_SUCCESS = '[Todo] Remove Many Success';
 export const REMOVE_MANY_FAIL = '[Todo] Remove Many Fail';
-export const CLEAR_COMPLETED = '[Todo] Clear Completed';
 export const SELECT_TODO = '[Todo] Select Todo';
 
 export class Load implements Action {

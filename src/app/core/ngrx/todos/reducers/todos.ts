@@ -65,6 +65,7 @@ export function reducer(
         case todo.EDIT_ONE_SUCCESS: {
             return {
                 ...adapter.updateOne(action.payload, state),
+                selectedId: 0,
                 loading: false,
             };
         }
