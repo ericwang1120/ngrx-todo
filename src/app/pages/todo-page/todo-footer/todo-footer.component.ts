@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-todo-footer',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./todo-footer.component.css']
 })
 export class TodoFooterComponent {
-
+  @Output('clearCompleted') clearCompleted = new EventEmitter();
+  @Input('completedIds') completedIds: number[];
+  @Input('unCompletedCount') unCompletedCount: number;
 }

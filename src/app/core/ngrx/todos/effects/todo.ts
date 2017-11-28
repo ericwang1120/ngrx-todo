@@ -54,6 +54,27 @@ export class TodoEffects {
                 .catch((err) => of(new todo.RemoveOneFail(err)));
         });
 
+    @Effect()
+    public removeMany$: Observable<Action> = this.actions$
+        .ofType<todo.RemoveMany>(todo.REMOVE_MANY)
+        .map((action) => action.payload)
+        .mergeMap((payload) => {
+            return this.todoService
+                .removeMany(payload)
+                .map((result) => new todo.RemoveManySuccess(result))
+                .catch((err) => of(new todo.RemoveManyFail(err)));
+        });
+
+    @Effect()
+    public editOne$: Observable<Action> = this.actions$
+        .ofType<todo.EditOne>(todo.EDIT_ONE)
+        .mergeMap((action) => {
+            return this.todoService
+                .editOne(action.id, action.changes)
+                .map((result) => new todo.EditOneSuccess(result))
+                .catch((err) => of(new todo.EditOneFail(err)));
+        });
+
     constructor(
         private actions$: Actions,
         private todoService: TodoService,

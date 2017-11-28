@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/from';
 import { Todo } from '../models/todo';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
@@ -28,6 +29,25 @@ export class TodoService {
     return this.http
       .delete(`api/todos/${id}`, this.jwt())
       .map(() => id);
+  }
+
+  public removeMany(ids: number[]): Observable<number[]> {
+    return ids.length > 0 ? Observable.from(ids)
+      .mergeMap((id) => this.removeOne(id))
+      .map(() => ids) : Observable.of(ids);
+  }
+
+  public editOne(id: number, changes: Partial<Todo>): Observable<{ id: number, changes: Partial<Todo> }> {
+    const obj = {
+      id: id,
+      ...changes
+    };
+
+    return this.http
+      .put(`api/todos`, JSON.stringify(obj), this.jwt())
+      .map(() => {
+        return { id: id, changes: changes };
+      });
   }
 
   private jwt() {

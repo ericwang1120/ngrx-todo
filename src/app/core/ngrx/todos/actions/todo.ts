@@ -17,6 +17,8 @@ export const REMOVE_ONE_FAIL = '[Todo] Remove One Fail';
 export const REMOVE_MANY = '[Todo] Remove Many';
 export const REMOVE_MANY_SUCCESS = '[Todo] Remove Many Success';
 export const REMOVE_MANY_FAIL = '[Todo] Remove Many Fail';
+export const CLEAR_COMPLETED = '[Todo] Clear Completed';
+export const SELECT_TODO = '[Todo] Select Todo';
 
 export class Load implements Action {
     public readonly type = LOAD;
@@ -55,13 +57,16 @@ export class AddOneFail implements Action {
 export class EditOne implements Action {
     public readonly type = EDIT_ONE;
 
-    constructor(public payload: Todo) { }
+    constructor(
+        public id: number,
+        public changes: Partial<Todo>
+    ) { }
 }
 
 export class EditOneSuccess implements Action {
     public readonly type = EDIT_ONE_SUCCESS;
 
-    constructor(public payload: Todo) { }
+    constructor(public payload: { id: number, changes: Partial<Todo> }) { }
 }
 
 export class EditOneFail implements Action {
@@ -106,6 +111,12 @@ export class RemoveManyFail implements Action {
     constructor(public payload: any) { }
 }
 
+export class SelectTodo implements Action {
+    public readonly type = SELECT_TODO;
+
+    constructor(public payload: number) { }
+}
+
 export type Actions = Load
     | LoadSuccess
     | LoadFail
@@ -120,4 +131,5 @@ export type Actions = Load
     | RemoveOneFail
     | RemoveMany
     | RemoveManySuccess
-    | RemoveManyFail;
+    | RemoveManyFail
+    | SelectTodo;

@@ -5,6 +5,7 @@ import * as todo from '../actions/todo';
 
 export interface State extends EntityState<Todo> {
     loading: boolean;
+    selectedId: number;
 }
 
 export const adapter: EntityAdapter<Todo> = createEntityAdapter<Todo>({
@@ -14,6 +15,7 @@ export const adapter: EntityAdapter<Todo> = createEntityAdapter<Todo>({
 
 export const initialState: State = adapter.getInitialState({
     loading: false,
+    selectedId: 0
 });
 
 export function reducer(
@@ -23,7 +25,9 @@ export function reducer(
     switch (action.type) {
         case todo.LOAD:
         case todo.ADD_ONE:
-        case todo.REMOVE_ONE: {
+        case todo.REMOVE_ONE:
+        case todo.REMOVE_MANY:
+        case todo.EDIT_ONE: {
             return {
                 ...state,
                 loading: true,
@@ -51,6 +55,20 @@ export function reducer(
             };
         }
 
+        case todo.REMOVE_MANY_SUCCESS: {
+            return {
+                ...adapter.removeMany(action.payload, state),
+                loading: false,
+            };
+        }
+
+        case todo.EDIT_ONE_SUCCESS: {
+            return {
+                ...adapter.updateOne(action.payload, state),
+                loading: false,
+            };
+        }
+
         case todo.LOAD_FAIL: {
             return {
                 ...adapter.removeAll(state),
@@ -59,10 +77,19 @@ export function reducer(
         }
 
         case todo.ADD_ONE_FAIL:
-        case todo.REMOVE_ONE_FAIL: {
+        case todo.REMOVE_ONE_FAIL:
+        case todo.REMOVE_MANY_FAIL:
+        case todo.EDIT_ONE_FAIL: {
             return {
                 ...state,
                 loading: false,
+            };
+        }
+
+        case todo.SELECT_TODO: {
+            return {
+                ...state,
+                selectedId: action.payload
             };
         }
 
@@ -73,3 +100,5 @@ export function reducer(
 }
 
 export const getLoading = (state: State) => state.loading;
+
+export const getSelectedId = (state: State) => state.selectedId;

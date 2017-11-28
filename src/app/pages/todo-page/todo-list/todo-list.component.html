@@ -21,14 +21,14 @@
             </div>
         </li>
 
-        <li *ngFor="let todo of todos" [class.completed]="todo.completed" [class.editing]="todo.editing">
+        <li *ngFor="let todo of todos" [class.completed]="todo.completed" [class.editing]="selectedId===todo.id">
             <div class="view" *ngIf="!loading">
                 <input class="toggle" type="checkbox" (click)="toggleCompletion(todo)" [checked]="todo.completed">
-                <label (dblclick)="editTodo(todo)">{{todo.title}}</label>
+                <label (dblclick)="selectTodo.emit(todo.id)">{{todo.title}}</label>
                 <button class="destroy" (click)="removeOne.emit(todo.id)"></button>
             </div>
-            <input class="edit" *ngIf="todo.editing" [value]="todo.title" #editedtodo (blur)="stopEditing(todo, editedtodo.value)" (keyup.enter)="updateEditingTodo(todo, editedtodo.value)"
-                (keyup.escape)="cancelEditingTodo(todo)">
+            <input class="edit" *ngIf="selectedId===todo.id" [value]="todo.title" (keyup.enter)="updateTitle(todo, $event.target.value)"
+                (keyup.escape)="selectTodo.emit(0)" (blur)="selectTodo.emit(0)">
         </li>
     </ul>
 </section>

@@ -32,3 +32,30 @@ export const getLoading = createSelector(
     getTodoEntitiesState,
     fromTodos.getLoading
 );
+
+export const getCompletedTodos = createSelector(
+    getTodoEntitiesState,
+    getAllTodos,
+    (entities, todos) => todos.filter((element) => element.completed === true)
+);
+
+export const getUnCompletedTodos = createSelector(
+    getTodoEntitiesState,
+    getAllTodos,
+    (entities, todos) => todos.filter((element) => element.completed === false)
+);
+
+export const getUnCompletedCount = createSelector(
+    getUnCompletedTodos,
+    (todos) => todos.length
+);
+
+export const getCompletedIds = createSelector(
+    getCompletedTodos,
+    (todos) => todos.map((todo) => todo.id)
+);
+
+export const getSelectedId = createSelector(
+    getTodoEntitiesState,
+    fromTodos.getSelectedId
+);

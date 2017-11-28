@@ -5,6 +5,6 @@
 
 <footer class="footer">
   <span class="todo-count">
-    <strong>1</strong> item left</span>
-  <button class="clear-completed" (click)="removeCompleted()">Clear completed</button>
+    <strong>{{unCompletedCount}}</strong> item left</span>
+  <button class="clear-completed" (click)="clearCompleted.emit(completedIds)">Clear completed</button>
 </footer>
